@@ -9,7 +9,6 @@ public class Sample {
 		super();
 		
 	}
-	
 	public Sample(int sampleNo, String sampleId, String samplePw) {
 		super();
 		this.sampleNo = sampleNo;
@@ -32,6 +31,7 @@ public class Sample {
 	public String getSamplePw() {
 		return samplePw;
 	}
+	
 	public void setSamplePw(String samplePw) {
 		this.samplePw = samplePw;
 	}

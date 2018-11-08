@@ -4,15 +4,18 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>sampleList.jsp</title>
 <!-- bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<!-- jquery CDN -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-<body>
-	<h1>sampleList</h1>
-	<table class = "table">
+<body class="container">
+	<h1 align = "center">sampleList</h1>
+		<div class="form-group text-right">
+			<a href="/sample/addSample">
+				<button type="button" class="btn btn-dark">입력</button>
+			</a>
+		</div>
+	<table class = "table table-striped">
 		<thead>
 			<tr>
 				<td>SAMPLE NO</td>
@@ -23,7 +26,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			
 			<!-- model안의 sampleList 가져와서 사용 -->
 			<c:forEach var="sample" items="${sampleList}">
 				<tr>
@@ -37,17 +39,23 @@
 			
 		</tbody>
 	</table>
-	<c:if test="${currentPage<=1}">
-		[이전]
-	</c:if>
-	<c:if test="${currentPage>1}">
-		<a href="/sample/sampleList?currentPage=${currentPage-1}">[이전]</a>
-	</c:if>
-	<c:if test="${currentPage>=lastPage}">
-		[다음]
-	</c:if>
-	<c:if test="${currentPage<lastPage}">
-		<a href="/sample/sampleList?currentPage=${currentPage+1}">[다음]</a>
-	</c:if>
+	<div class="form-group text-center">
+		<c:if test="${currentPage<=1}">
+			<button type="button" class="btn btn-light">이전</button>
+		</c:if>
+		<c:if test="${currentPage>1}">
+			<a href="/sample/sampleList?currentPage=${currentPage-1}">
+				<button type="button" class="btn btn-primary">이전</button>
+			</a>
+		</c:if>
+		<c:if test="${currentPage>=lastPage}">
+			<button type="button" class="btn btn-light">다음</button>
+		</c:if>
+		<c:if test="${currentPage<lastPage}">
+			<a href="/sample/sampleList?currentPage=${currentPage+1}">
+				<button type="button" class="btn btn-primary">다음</button>
+			</a>
+		</c:if>
+	</div>
 </body>
 </html>

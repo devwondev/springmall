@@ -2,13 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.springmall.sample.mapper.SampleMapper">
+	<!-- 전체 조회(페이징)-->
     <select id="selectSampleAll" resultType="com.example.springmall.sample.vo.Sample" parameterType="HashMap">
         SELECT sample_no as sampleNo, sample_id as sampleId, sample_pw as samplePw FROM sample ORDER BY sampleNo LIMIT #{startRow},#{rowPerPage}
     </select>
+    <!-- 리스트 갯수 구하기 -->
     <select id="selectSampleCount" resultType="int">
     	SELECT COUNT(*) FROM sample
     </select>
+    <!-- 삭제 -->
     <delete id="deleteSample" parameterType="int">
     	DELETE FROM sample WHERE sample_no = #{sampleNo}
     </delete>
+    <!-- 입력(sample_no는  AUTO_INCREMENT-->
+    <insert id="insertSample" parameterType="com.example.springmall.sample.vo.Sample">
+    	INSERT INTO sample(sample_id,sample_pw) VALUES('${sampleId}','${samplePw}')
+    </insert>
+ 	<!-- 한명의 정보 조회 -->
+ 	<select id="selectOne" resultType="com.example.springmall.sample.vo.Sample" parameterType="int">
+ 		SELECT sample_no as sampleNo, sample_id as sampleId, sample_pw as samplePw FROM sample WHERE sample_no = #{sampleNo}
+ 	</select>
+ 	<!-- 수정 -->
+ 	<update id="updateSample" parameterType="com.example.springmall.sample.vo.Sample">
+ 		UPDATE sample SET sample_id = #{sampleId}, sample_pw = #{samplePw} WHERE sample_no = #{sampleNo}
+ 	</update>
 </mapper>
