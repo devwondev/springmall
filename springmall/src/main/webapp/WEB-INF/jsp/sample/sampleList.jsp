@@ -48,7 +48,7 @@
 				<button type="button" class="btn btn-primary">이전</button>
 			</a>
 		</c:if>
-		<c:forEach var = "i" begin="${firstNumber}" end="${lastNumber}" step="1">
+		<c:forEach var = "i" begin="${startPage}" end="${endPage}" step="1">
 			<c:if test = "${i!=currentPage}">
 				<a href="/sample/sampleList?page=${i}">${i}</a>
 			</c:if>
@@ -65,5 +65,14 @@
 			</a>
 		</c:if>
 	</div>
+	<form action="/sample/sampleList" method="post" class="form-group text-center">
+		<select name="searchKey" class="form-control-sm">
+			<option value="">::선택::</option>
+			<option value="searchNo">번호</option>
+			<option value="searchId">아이디</option>
+		</select>
+		<input type="text" name="searchWord" class="form-control-sm">
+		<input class="btn" type="submit" value="검색">
+	</form>
 </body>
 </html>

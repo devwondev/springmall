@@ -37,8 +37,8 @@ public class SampleController {
 		model.addAttribute("sampleList", sampleList);
 		model.addAttribute("currentPage", map.get("currentPage"));
 		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("lastNumber", map.get("lastNumber"));
-		model.addAttribute("firstNumber", map.get("firstNumber"));
+		model.addAttribute("startPage", map.get("startPage"));
+		model.addAttribute("endPage", map.get("endPage"));
 		return "/sample/sampleList";	// view의 이름(forward)
 	}
 	/**

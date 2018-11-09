@@ -27,17 +27,16 @@ public class SampleService {
 	public HashMap<String, Object> getSampleAll(int page){
 		System.out.println("SampleService.getSampleAll()");
 		HashMap<String, Integer> pageAction = new HashMap<String, Integer>();
-		int rowPerPage = 10;
-		int currentPage = 1;
-		int lastPage=1;
-		int lastNumber=10;
-		int firstNumber=1;
-		int selectSampleCount = sampleMapper.selectSampleCount();
+		int pageBlock=5;	// 페이지 블록 처리할 변수 선언
+		int rowPerPage = 10;	// 페이지 당 보여줄 글 목록
+		int currentPage = 1;	// 현재 페이지
+		int lastPage=1;	// 마지막 페이지
+		int selectSampleCount = sampleMapper.selectSampleCount();	// 전체 글 갯수
 		if(page != 1) {
 			currentPage  = page;
 		}
-		lastPage = selectSampleCount/rowPerPage;
-		if(selectSampleCount%rowPerPage!=0) {
+		lastPage = selectSampleCount/rowPerPage;	// 마지막 페이지는 전체 글 갯수에서 페이지 당 보여줄 글 목록으로 나눔
+		if(selectSampleCount%rowPerPage!=0) {	// 나머지가 0이 아니라면, 전체 글이 101개 일때 총 페이지는 11페이지
 			lastPage++;
 		}
 		if(currentPage>lastPage) {
@@ -45,11 +44,12 @@ public class SampleService {
 		}else if(currentPage<1) {
 			currentPage = 1;
 		}
-		lastNumber = ((currentPage+9)/10)*10;
-		firstNumber = lastNumber-9;
-		if((lastPage-1)/10 == (currentPage-1)/10) {
-			lastNumber = lastPage;
-        }
+		// 페이징 블록 계산
+		int startPage = ((currentPage-1)/pageBlock)*pageBlock+1;	// 시작 페이지
+		int endPage = startPage + pageBlock -1;	// 끝 페이지
+		if(endPage>lastPage) {
+			endPage = lastPage;
+		}
 		int startRow = (currentPage-1)*rowPerPage;
 		pageAction.put("startRow", startRow);
 		pageAction.put("rowPerPage",rowPerPage);
@@ -58,8 +58,8 @@ public class SampleService {
 		map.put("sampleList", sampleList);
 		map.put("currentPage", currentPage);
 		map.put("lastPage", lastPage);
-		map.put("lastNumber", lastNumber);
-		map.put("firstNumber", firstNumber);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
 		return map;
 	}
 	// 1-2. 전체 글 목록 갯수
