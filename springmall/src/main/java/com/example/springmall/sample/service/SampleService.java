@@ -1,5 +1,6 @@
 package com.example.springmall.sample.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,43 @@ public class SampleService {
 	@Autowired
 	private SampleMapper sampleMapper;
 	// 1-1. 리스트
-	public List<Sample> getSampleAll(int startRow, int rowPerPage){
+	public HashMap<String, Object> getSampleAll(int page){
 		System.out.println("SampleService.getSampleAll()");
-		return sampleMapper.selectSampleAll(startRow, rowPerPage);
+		HashMap<String, Integer> pageAction = new HashMap<String, Integer>();
+		int rowPerPage = 10;
+		int currentPage = 1;
+		int lastPage=1;
+		int lastNumber=10;
+		int firstNumber=1;
+		int selectSampleCount = sampleMapper.selectSampleCount();
+		if(page != 1) {
+			currentPage  = page;
+		}
+		lastPage = selectSampleCount/rowPerPage;
+		if(selectSampleCount%rowPerPage!=0) {
+			lastPage++;
+		}
+		if(currentPage>lastPage) {
+			currentPage=lastPage;
+		}else if(currentPage<1) {
+			currentPage = 1;
+		}
+		lastNumber = ((currentPage+9)/10)*10;
+		firstNumber = lastNumber-9;
+		if((lastPage-1)/10 == (currentPage-1)/10) {
+			lastNumber = lastPage;
+        }
+		int startRow = (currentPage-1)*rowPerPage;
+		pageAction.put("startRow", startRow);
+		pageAction.put("rowPerPage",rowPerPage);
+		List<Sample> sampleList = sampleMapper.selectSampleAll(pageAction);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("sampleList", sampleList);
+		map.put("currentPage", currentPage);
+		map.put("lastPage", lastPage);
+		map.put("lastNumber", lastNumber);
+		map.put("firstNumber", firstNumber);
+		return map;
 	}
 	// 1-2. 전체 글 목록 갯수
 	public int selectSampleCount() {

@@ -40,19 +40,27 @@
 		</tbody>
 	</table>
 	<div class="form-group text-center">
-		<c:if test="${currentPage<=1}">
+		<c:if test ="${currentPage<=1}">
 			<button type="button" class="btn btn-light">이전</button>
 		</c:if>
-		<c:if test="${currentPage>1}">
-			<a href="/sample/sampleList?currentPage=${currentPage-1}">
+		<c:if test ="${currentPage>1}">
+			<a href="/sample/sampleList?page=${currentPage-1}">
 				<button type="button" class="btn btn-primary">이전</button>
 			</a>
 		</c:if>
+		<c:forEach var = "i" begin="${firstNumber}" end="${lastNumber}" step="1">
+			<c:if test = "${i!=currentPage}">
+				<a href="/sample/sampleList?page=${i}">${i}</a>
+			</c:if>
+			<c:if test = "${i==currentPage}">
+				${i}
+			</c:if>
+		</c:forEach>
 		<c:if test="${currentPage>=lastPage}">
 			<button type="button" class="btn btn-light">다음</button>
 		</c:if>
 		<c:if test="${currentPage<lastPage}">
-			<a href="/sample/sampleList?currentPage=${currentPage+1}">
+			<a href="/sample/sampleList?page=${currentPage+1}">
 				<button type="button" class="btn btn-primary">다음</button>
 			</a>
 		</c:if>

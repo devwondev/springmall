@@ -1,5 +1,6 @@
 package com.example.springmall.sample.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +30,15 @@ public class SampleController {
 	 * @Method Name : sampleList
 	 */
 	@RequestMapping(value="/sample/sampleList", method=RequestMethod.GET)
-	public String sampleList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+	public String sampleList(Model model, @RequestParam(value="page", defaultValue="1") int page) {
 		System.out.println("SampleController.sampleList()");
-		int selectSampleCount = sampleService.selectSampleCount();
-		int rowPerPage = 10;	// 페이지 당 보여줄 글 목록
-		int startRow = (currentPage-1)*rowPerPage;
-		int lastPage = selectSampleCount/rowPerPage;	// 마지막 페이지는 총 갯수를 페이지 당 보여줄 글 목록으로 나눈 몫
-		// 만약, 전체 갯수가 100이면 10으로 나누었을 때  마지막 페이지는 10
-		// 하지만, 전체 갯수가 101이리나면 10으로 나누었을 때  마지막 페이지는 11
-		if(selectSampleCount % rowPerPage != 0) {	
-			lastPage++;
-		}
-		List<Sample> sampleList = sampleService.getSampleAll(startRow, rowPerPage);
+		HashMap<String, Object> map = sampleService.getSampleAll(page);
+		List<Sample> sampleList = (List<Sample>) map.get("sampleList");
 		model.addAttribute("sampleList", sampleList);
-		model.addAttribute("lastPage", lastPage);
-		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("currentPage", map.get("currentPage"));
+		model.addAttribute("lastPage", map.get("lastPage"));
+		model.addAttribute("lastNumber", map.get("lastNumber"));
+		model.addAttribute("firstNumber", map.get("firstNumber"));
 		return "/sample/sampleList";	// view의 이름(forward)
 	}
 	/**
