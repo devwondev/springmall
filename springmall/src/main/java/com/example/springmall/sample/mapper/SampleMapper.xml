@@ -26,4 +26,8 @@
  	<update id="updateSample" parameterType="com.example.springmall.sample.vo.Sample">
  		UPDATE sample SET sample_id = #{sampleId}, sample_pw = #{samplePw} WHERE sample_no = #{sampleNo}
  	</update>
+ 	<!-- 로그인 -->
+ 	<select id="loginSample" parameterType="com.example.springmall.sample.vo.Sample" resultType="com.example.springmall.sample.vo.Sample">
+ 		SELECT sample_no as sampleNo, sample_id as sampleId FROM sample WHERE sample_id=#{sampleId} AND sample_pw=#{samplePw}
+ 	</select>
 </mapper>

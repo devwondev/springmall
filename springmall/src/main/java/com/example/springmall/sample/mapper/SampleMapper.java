@@ -21,4 +21,6 @@ public interface SampleMapper {
 	public abstract Sample selectOne(int sampleNo);
 	// 4-2. update(수정 액션)
 	int updateSample(Sample sample);
+	// 5. select(로그인)
+	Sample loginSample(Sample sample);
 }

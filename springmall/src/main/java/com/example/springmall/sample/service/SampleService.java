@@ -87,4 +87,9 @@ public class SampleService {
 		System.out.println("SampleService.modifySample()");
 		return sampleMapper.updateSample(sample);
 	}
+	//	5. 로그인
+	public Sample loginSample(Sample sample) {
+		System.out.println("SampleService.loginSample()");
+		return sampleMapper.loginSample(sample);
+	}
 }
