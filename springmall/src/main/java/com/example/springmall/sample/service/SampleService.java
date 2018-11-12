@@ -1,14 +1,21 @@
 package com.example.springmall.sample.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.example.springmall.sample.mapper.SampleFileMapper;
 import com.example.springmall.sample.mapper.SampleMapper;
 import com.example.springmall.sample.vo.Sample;
+import com.example.springmall.sample.vo.SampleFile;
+import com.example.springmall.sample.vo.SampleRequest;
 
 @Service
 /**
@@ -23,6 +30,8 @@ public class SampleService {
 	*/
 	@Autowired
 	private SampleMapper sampleMapper;
+	@Autowired
+	private SampleFileMapper sampleFileMapper;
 	// 1-1. 리스트
 	public HashMap<String, Object> getSampleAll(int page){
 		System.out.println("SampleService.getSampleAll()");
@@ -73,9 +82,51 @@ public class SampleService {
 		return sampleMapper.deleteSample(sampleNo);
 	}
 	// 3. 입력
-	public int addSample(Sample sample) {
+	public int addSample(SampleRequest sampleRequest) {
 		System.out.println("SampleService.addSample()");
-		return sampleMapper.insertSample(sample);
+		// 1
+		Sample sample = new Sample();
+		sample.setSampleId(sampleRequest.getSampleId());
+		sample.setSamplePw(sampleRequest.getSamplePw());
+		sampleMapper.insertSample(sample);
+		System.out.println(sample.getSampleNo()+"sampleNo");
+		// 2
+		SampleFile sampleFile = new SampleFile();
+		MultipartFile multipartFile = sampleRequest.getMultipartFile();
+		// 1. SampleFileNo : AutoIncrement
+		// 2. SampleNo
+		sampleFile.setSampleNo(sample.getSampleNo());	// insertSample(sample) 후에 pk값이 sample 자리에 채워진다.
+		// 3. SampleFilePath
+		String path = "c:\\uploads";
+		sampleFile.setSampleFilePath(path);
+		// 4. 확장자
+		String originalFileName = multipartFile.getOriginalFilename();	// 이름.확장자
+		int point = originalFileName.lastIndexOf(".");
+		String ext = originalFileName.substring(point+1);	// 끝에있는 점을 찾아서 그 다음부터의 문자를 찾아낸다.
+		System.out.println(ext+"<--ext");
+		sampleFile.setSampleFileExt(ext);
+		// 5. 이름
+		String fileName = UUID.randomUUID().toString();
+		System.out.println(fileName+"<--fileName");
+		sampleFile.setSampleFileName(fileName);
+		// 6. 타입
+		sampleFile.setSampleFileType(multipartFile.getContentType());
+		System.out.println(multipartFile.getContentType()+"<--type");
+		// 7. 크기
+		sampleFile.setSampleFileSize(multipartFile.getSize());
+		System.out.println(multipartFile.getSize()+"<--size");
+		// 내가 원하는 이름의 빈 파일 하나 만들기
+		File f = new File(path+"\\"+fileName+"."+ext);
+		// multipartfile의 파일을 위의 빈 파일로 복사
+		try {
+			multipartFile.transferTo(f);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		// @Transactional에 의해 1->2
+		return sampleFileMapper.insertSampleFile(sampleFile);
 	}
 	// 4-1. 수정 화면
 	public Sample getSample(int sampleNo) {

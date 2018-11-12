@@ -17,6 +17,9 @@
     <!-- 입력(sample_no는  AUTO_INCREMENT-->
     <insert id="insertSample" parameterType="com.example.springmall.sample.vo.Sample">
     	INSERT INTO sample(sample_id,sample_pw) VALUES('${sampleId}','${samplePw}')
+    	<selectKey resultType="int" keyProperty="sampleNo" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
     </insert>
  	<!-- 한명의 정보 조회 -->
  	<select id="selectOne" resultType="com.example.springmall.sample.vo.Sample" parameterType="int">

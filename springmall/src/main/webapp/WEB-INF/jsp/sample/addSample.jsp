@@ -39,7 +39,7 @@
 </head>
 <body class="container">
 	<h1 align = "center">addSample</h1>
-	<form id="addForm" action="/sample/addSample" method="post">
+	<form id="addForm" action="/sample/addSample" method="post" enctype="multipart/form-data">
 		<table class ="table">
 			<tr>
 				<td>id</td>
@@ -53,6 +53,12 @@
 				<td colspan="2">
 					<input class="form-control" type ="password" name ="samplePw" id="samplePw" placeholder="비밀번호를 입력하세요">
 					<span id="samplePwHelper"></span>
+				</td>
+			</tr>
+			<tr>
+				<td>file</td>
+				<td>
+					<input class="form-control" type ="file" name ="multipartFile">
 				</td>
 			</tr>
 		</table>

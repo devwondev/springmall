@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.springmall.sample.service.SampleService;
 import com.example.springmall.sample.vo.Sample;
+import com.example.springmall.sample.vo.SampleRequest;
 
 @Controller
 public class SampleController {
@@ -84,13 +85,10 @@ public class SampleController {
 	 * @Method Name : addSample
 	 */
 	@RequestMapping(value="/sample/addSample", method=RequestMethod.POST)
-	public String addSample(Sample sample) {
+	public String addSample(SampleRequest sampleRequest) {
 		System.out.println("SampleController.addSample() 입력액션");
-		if(sampleService.addSample(sample) == 1) {
-			System.out.println(sample.getSampleId()+"의 데이터 입력 성공");
-		}else {
-			System.out.println(sample.getSampleId()+"의 데이터 입력 실패");
-		}
+		System.out.println(sampleRequest.getMultipartFile()+"<--sampleRequest.getMultipartFile()");
+		sampleService.addSample(sampleRequest);
 		return "redirect:/sample/sampleList";
 	}
 	/**
@@ -121,11 +119,7 @@ public class SampleController {
 	@RequestMapping(value="/sample/modifySample", method=RequestMethod.POST)
 	public String modifySample(Sample sample) {
 		System.out.println("SampleController.modifySample() 수정액션");
-		if(sampleService.modifySample(sample) == 1) {
-			System.out.println(sample.getSampleNo()+"의 데이터 수정 성공");
-		}else {
-			System.out.println(sample.getSampleNo()+"의 데이터 수정 실패");
-		}
+		sampleService.modifySample(sample);
 		return "redirect:/sample/sampleList";
 	}
 }

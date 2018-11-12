@@ -65,7 +65,7 @@
 			</a>
 		</c:if>
 	</div>
-	<form action="/sample/sampleList" method="post" class="form-group text-center">
+	<!-- <form action="/sample/sampleList" method="post" class="form-group text-center">
 		<select name="searchKey" class="form-control-sm">
 			<option value="">::선택::</option>
 			<option value="searchNo">번호</option>
@@ -73,6 +73,6 @@
 		</select>
 		<input type="text" name="searchWord" class="form-control-sm">
 		<input class="btn" type="submit" value="검색">
-	</form>
+	</form> -->
 </body>
 </html>

@@ -4,6 +4,7 @@ public class Sample {
 	public int sampleNo;
 	public String sampleId;
 	public String samplePw;
+	// private SampleFile sampleFile;	// 조인할때 필요함
 	
 	public Sample() {
 		super();
