@@ -4,3 +4,5 @@ Mapper.xml -> Mapper.java -> Service -> Controller -> jsp(view)
 3. 회원가입
 4. 회원수정
 5. 로그인
+6. 파일업로드
+7. 파일업로드 삭제

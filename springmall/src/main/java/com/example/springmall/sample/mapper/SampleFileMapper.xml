@@ -20,4 +20,10 @@
 		#{sampleFileSize},
 		now()) 
 	</insert>
+	<select id="selectSampleFileOne" parameterType="int" resultType="com.example.springmall.sample.vo.SampleFile">
+    	SELECT samplefile_path as sampleFilePath ,samplefile_name as sampleFileName,samplefile_ext as sampleFileExt FROM samplefile WHERE sample_no=#{sampleNo}
+	</select>
+	<delete id="deleteSampleFile" parameterType="int">
+	 	DELETE FROM samplefile WHERE sample_no = #{sampleNo}
+	</delete>
 </mapper>

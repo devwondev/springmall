@@ -79,6 +79,13 @@ public class SampleService {
 	// 2. 삭제
 	public int removeSample(int sampleNo) {
 		System.out.println("SampleService.removeSample()");
+		SampleFile sampleFile = sampleFileMapper.selectSampleFileOne(sampleNo);
+		String path = sampleFile.getSampleFilePath();
+		String fileName = sampleFile.getSampleFileName();
+		String ext = sampleFile.getSampleFileExt();
+		File f = new File(path+"\\"+fileName+"."+ext);
+		f.delete();
+		sampleFileMapper.deleteSampleFile(sampleNo);
 		return sampleMapper.deleteSample(sampleNo);
 	}
 	// 3. 입력
@@ -115,6 +122,7 @@ public class SampleService {
 		// 7. 크기
 		sampleFile.setSampleFileSize(multipartFile.getSize());
 		System.out.println(multipartFile.getSize()+"<--size");
+		sampleFileMapper.insertSampleFile(sampleFile);
 		// 내가 원하는 이름의 빈 파일 하나 만들기
 		File f = new File(path+"\\"+fileName+"."+ext);
 		// multipartfile의 파일을 위의 빈 파일로 복사
@@ -126,7 +134,7 @@ public class SampleService {
 			e.printStackTrace();
 		}
 		// @Transactional에 의해 1->2
-		return sampleFileMapper.insertSampleFile(sampleFile);
+		return 0;
 	}
 	// 4-1. 수정 화면
 	public Sample getSample(int sampleNo) {
