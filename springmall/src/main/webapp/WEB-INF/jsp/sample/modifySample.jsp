@@ -39,7 +39,7 @@
 </head>
 <body class="container">
 	<h1 align = "center">modifySample</h1>
-	<form id="modifyForm" action="/sample/modifySample" method="post">
+	<form id="modifyForm" action="/sample/modifySample" method="post" enctype="multipart/form-data">
 		<input class="form-control" type="hidden" name = "sampleNo" value="${sample.sampleNo}">
 		<table class = "table">
 			<tr>
@@ -55,6 +55,16 @@
 					<input class="form-control" type = "password" name = "samplePw" id="samplePw" value="${sample.samplePw}">
 					<span id="samplePwHelper"></span>
 				</td>
+			</tr>
+			<tr>
+				<td colspan="2">file</td>
+				<td>
+					<input class="form-control" type="text" value="${sampleFile.sampleFileName}">
+					<input class="form-control" type ="file" name ="multipartFile">
+				</td>
+			</tr>
+			<tr>
+				
 			</tr>
 		</table>
 		<div class="form-group text-center">

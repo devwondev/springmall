@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.springmall.sample.service.SampleService;
 import com.example.springmall.sample.vo.Sample;
+import com.example.springmall.sample.vo.SampleAndSampleFile;
 import com.example.springmall.sample.vo.SampleRequest;
 
 @Controller
@@ -34,7 +35,7 @@ public class SampleController {
 	public String sampleList(Model model, @RequestParam(value="page", defaultValue="1") int page) {
 		System.out.println("SampleController.sampleList()");
 		HashMap<String, Object> map = sampleService.getSampleAll(page);
-		List<Sample> sampleList = (List<Sample>) map.get("sampleList");
+		List<SampleAndSampleFile> sampleList = (List<SampleAndSampleFile>) map.get("sampleList");
 		model.addAttribute("sampleList", sampleList);
 		model.addAttribute("currentPage", map.get("currentPage"));
 		model.addAttribute("lastPage", map.get("lastPage"));
@@ -103,8 +104,9 @@ public class SampleController {
 	@RequestMapping(value="/sample/modifySample", method=RequestMethod.GET)
 	public String modifySample(Model model, @RequestParam(value="sampleNo") int sampleNo) {
 		System.out.println("SampleController.modifySample() 수정화면");
-		Sample sample = sampleService.getSample(sampleNo);
-		model.addAttribute("sample", sample);
+		HashMap<String, Object> map = sampleService.getSample(sampleNo);
+		model.addAttribute("sampleFile", map.get("sampleFile"));
+		model.addAttribute("sample", map.get("sample"));
 		return "sample/modifySample";
 	}
 	/**

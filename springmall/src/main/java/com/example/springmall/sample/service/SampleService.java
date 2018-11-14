@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.springmall.sample.mapper.SampleFileMapper;
 import com.example.springmall.sample.mapper.SampleMapper;
 import com.example.springmall.sample.vo.Sample;
+import com.example.springmall.sample.vo.SampleAndSampleFile;
 import com.example.springmall.sample.vo.SampleFile;
 import com.example.springmall.sample.vo.SampleRequest;
 
@@ -62,7 +63,7 @@ public class SampleService {
 		int startRow = (currentPage-1)*rowPerPage;
 		pageAction.put("startRow", startRow);
 		pageAction.put("rowPerPage",rowPerPage);
-		List<Sample> sampleList = sampleMapper.selectSampleAll(pageAction);
+		List<SampleAndSampleFile> sampleList = sampleMapper.selectSampleAll(pageAction);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("sampleList", sampleList);
 		map.put("currentPage", currentPage);
@@ -81,8 +82,11 @@ public class SampleService {
 		System.out.println("SampleService.removeSample()");
 		SampleFile sampleFile = sampleFileMapper.selectSampleFileOne(sampleNo);
 		String path = sampleFile.getSampleFilePath();
+		System.out.println(path+"<-path");
 		String fileName = sampleFile.getSampleFileName();
+		System.out.println(fileName+"<-fileName");
 		String ext = sampleFile.getSampleFileExt();
+		System.out.println(ext+"<-ext");
 		File f = new File(path+"\\"+fileName+"."+ext);
 		f.delete();
 		sampleFileMapper.deleteSampleFile(sampleNo);
@@ -137,13 +141,19 @@ public class SampleService {
 		return 0;
 	}
 	// 4-1. 수정 화면
-	public Sample getSample(int sampleNo) {
+	public HashMap<String, Object> getSample(int sampleNo) {
 		System.out.println("SampleService.getSample()");
-		return sampleMapper.selectOne(sampleNo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		SampleFile sampleFile = sampleFileMapper.selectSampleFileOne(sampleNo);
+		Sample sample = sampleMapper.selectOne(sampleNo);
+		map.put("sampleFile", sampleFile);
+		map.put("sample", sample);
+		return map;
 	}
 	// 4-2. 수정 액션
 	public int modifySample(Sample sample) {
 		System.out.println("SampleService.modifySample()");
+		
 		return sampleMapper.updateSample(sample);
 	}
 	//	5. 로그인

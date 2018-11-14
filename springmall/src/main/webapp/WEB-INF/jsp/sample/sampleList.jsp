@@ -21,6 +21,7 @@
 				<td>SAMPLE NO</td>
 				<td>SAMPLE ID</td>
 				<td>SAMPLE PW</td>
+				<td>SAMPLE FILE</td>
 				<td>DELETE</td>
 				<td>UPDATE</td>
 			</tr>
@@ -32,6 +33,7 @@
 					<td>${sample.sampleNo}</td>
 					<td>${sample.sampleId}</td>
 					<td>${sample.samplePw}</td>
+					<td>${sample.sampleFileName}.${sample.sampleFileExt}</td>
 					<td><a href="/sample/removeSample?sampleNo=${sample.sampleNo}">DELETE</a></td>
 					<td><a href="/sample/modifySample?sampleNo=${sample.sampleNo}">UPDATE</a></td>
 				</tr>
