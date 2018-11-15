@@ -67,14 +67,16 @@
 			</a>
 		</c:if>
 	</div>
-	<!-- <form action="/sample/sampleList" method="post" class="form-group text-center">
+	<form action="/sample/sampleList" method="post" class="form-group text-center">
 		<select name="searchKey" class="form-control-sm">
 			<option value="">::선택::</option>
-			<option value="searchNo">번호</option>
-			<option value="searchId">아이디</option>
+			<option value="sampleNo">번호</option>
+			<option value="samPleId">아이디</option>
+			<option value="sampleFileName">파일명</option>
+			<option value="sampleFileExt">파일확장자</option>
 		</select>
 		<input type="text" name="searchWord" class="form-control-sm">
 		<input class="btn" type="submit" value="검색">
-	</form> -->
+	</form>
 </body>
 </html>

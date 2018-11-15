@@ -9,5 +9,5 @@ public interface SampleFileMapper {
 	int insertSampleFile(SampleFile sampleFile);
 	SampleFile selectSampleFileOne(int sampleNo);
 	int deleteSampleFile(int sampleNo);
-	int updateSampleFile(int sampleNo);
+	int updateSampleFile(SampleFile sampleFile);
 }

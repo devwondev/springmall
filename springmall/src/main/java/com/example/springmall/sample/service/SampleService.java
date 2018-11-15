@@ -80,15 +80,21 @@ public class SampleService {
 	// 2. 삭제
 	public int removeSample(int sampleNo) {
 		System.out.println("SampleService.removeSample()");
+		// sampleFile 정보 가져옴
 		SampleFile sampleFile = sampleFileMapper.selectSampleFileOne(sampleNo);
+		// 경로
 		String path = sampleFile.getSampleFilePath();
 		System.out.println(path+"<-path");
+		// 파일이름
 		String fileName = sampleFile.getSampleFileName();
 		System.out.println(fileName+"<-fileName");
+		// 확장자
 		String ext = sampleFile.getSampleFileExt();
 		System.out.println(ext+"<-ext");
+		// 파일 삭제
 		File f = new File(path+"\\"+fileName+"."+ext);
 		f.delete();
+		// 파일 삭제 먼저하고, 정보 삭제
 		sampleFileMapper.deleteSampleFile(sampleNo);
 		return sampleMapper.deleteSample(sampleNo);
 	}
@@ -100,7 +106,7 @@ public class SampleService {
 		sample.setSampleId(sampleRequest.getSampleId());
 		sample.setSamplePw(sampleRequest.getSamplePw());
 		sampleMapper.insertSample(sample);
-		System.out.println(sample.getSampleNo()+"sampleNo");
+		System.out.println(sample.getSampleNo()+"<--sampleNo");
 		// 2
 		SampleFile sampleFile = new SampleFile();
 		MultipartFile multipartFile = sampleRequest.getMultipartFile();
@@ -151,10 +157,60 @@ public class SampleService {
 		return map;
 	}
 	// 4-2. 수정 액션
-	public int modifySample(Sample sample) {
+	public int modifySample(SampleRequest sampleRequest, String formFileName) {
 		System.out.println("SampleService.modifySample()");
+		// 1.
+		Sample sample = new Sample();
+		sample.setSampleNo(sampleRequest.getSampleNo());
+		sample.setSampleId(sampleRequest.getSampleId());
+		sample.setSamplePw(sampleRequest.getSamplePw());
+		// 만약, 파일 수정을 안했다면
+		if(sampleRequest.getMultipartFile().getOriginalFilename().length() != 0) {
+			System.out.println("if문 실행");
+			// 2.
+			SampleFile sampleFile = new SampleFile();
+			MultipartFile multipartFile = sampleRequest.getMultipartFile();
+			sampleFile.setSampleNo(sample.getSampleNo());	// insertSample(sample) 후에 pk값이 sample 자리에 채워진다.
+			// 3. 
+			String path = "c:\\uploads";
+			sampleFile.setSampleFilePath(path);
+			// 4.
+			String originalFileName = multipartFile.getOriginalFilename();	// 이름.확장자
+			int point = originalFileName.lastIndexOf(".");
+			String ext = originalFileName.substring(point+1);	// 끝에있는 점을 찾아서 그 다음부터의 문자를 찾아낸다.
+			System.out.println(ext+"<--ext");
+			sampleFile.setSampleFileExt(ext);
+			// 5.
+			String fileName = UUID.randomUUID().toString();
+			System.out.println(fileName+"<--fileName");
+			sampleFile.setSampleFileName(fileName);
+			// 6.
+			sampleFile.setSampleFileType(multipartFile.getContentType());
+			System.out.println(multipartFile.getContentType()+"<--type");
+			// 7.
+			sampleFile.setSampleFileSize(multipartFile.getSize());
+			System.out.println(multipartFile.getSize()+"<--size");
+			sampleMapper.updateSample(sample);
+			sampleFileMapper.updateSampleFile(sampleFile);
+			// 이전의 파일 삭제
+			File beforeFile = new File(path+"\\"+formFileName);
+			beforeFile.delete();
+			// 새로운 파일 생성
+			File f = new File(path+"\\"+fileName+"."+ext);
+			try {
+				multipartFile.transferTo(f);
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else {
+			System.out.println("else문 실행");
+			sampleMapper.updateSample(sample);
+		}
 		
-		return sampleMapper.updateSample(sample);
+		return 0;
+		
 	}
 	//	5. 로그인
 	public Sample loginSample(Sample sample) {

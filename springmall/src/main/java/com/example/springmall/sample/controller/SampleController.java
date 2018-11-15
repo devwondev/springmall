@@ -119,9 +119,9 @@ public class SampleController {
 	 * @Method Name : modifySample
 	 */
 	@RequestMapping(value="/sample/modifySample", method=RequestMethod.POST)
-	public String modifySample(Sample sample) {
+	public String modifySample(SampleRequest sampleRequest, String formFileName) {
 		System.out.println("SampleController.modifySample() 수정액션");
-		sampleService.modifySample(sample);
+		sampleService.modifySample(sampleRequest, formFileName);
 		return "redirect:/sample/sampleList";
 	}
 }

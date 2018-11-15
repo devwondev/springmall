@@ -59,7 +59,7 @@
 			<tr>
 				<td colspan="2">file</td>
 				<td>
-					<input class="form-control" type="text" value="${sampleFile.sampleFileName}">
+					<input class="form-control" type="text" name="formFileName" value="${sampleFile.sampleFileName}.${sampleFile.sampleFileExt}">
 					<input class="form-control" type ="file" name ="multipartFile">
 				</td>
 			</tr>
