@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.springmall.sample.mapper.SampleFileMapper;
 import com.example.springmall.sample.mapper.SampleMapper;
@@ -99,14 +100,13 @@ public class SampleService {
 		return sampleMapper.deleteSample(sampleNo);
 	}
 	// 3. 입력
-	public int addSample(SampleRequest sampleRequest) {
+	public int addSample(SampleRequest sampleRequest, MultipartHttpServletRequest request) {
 		System.out.println("SampleService.addSample()");
 		// 1
 		Sample sample = new Sample();
 		sample.setSampleId(sampleRequest.getSampleId());
 		sample.setSamplePw(sampleRequest.getSamplePw());
 		sampleMapper.insertSample(sample);
-		System.out.println(sample.getSampleNo()+"<--sampleNo");
 		// 2
 		SampleFile sampleFile = new SampleFile();
 		MultipartFile multipartFile = sampleRequest.getMultipartFile();
@@ -114,7 +114,15 @@ public class SampleService {
 		// 2. SampleNo
 		sampleFile.setSampleNo(sample.getSampleNo());	// insertSample(sample) 후에 pk값이 sample 자리에 채워진다.
 		// 3. SampleFilePath
-		String path = "c:\\uploads";
+		String path = request.getSession().getServletContext().getRealPath("/uploads");
+		System.out.println(path+"<--path");
+		File fileDirectory = new File(path);
+		if(!fileDirectory.exists()) {
+			fileDirectory.mkdirs();
+			System.out.println("directory create!!!");
+		}else {
+			System.out.println("Not directory create");
+		}
 		sampleFile.setSampleFilePath(path);
 		// 4. 확장자
 		String originalFileName = multipartFile.getOriginalFilename();	// 이름.확장자
@@ -157,7 +165,7 @@ public class SampleService {
 		return map;
 	}
 	// 4-2. 수정 액션
-	public int modifySample(SampleRequest sampleRequest, String formFileName) {
+	public int modifySample(SampleRequest sampleRequest, String formFileName, MultipartHttpServletRequest request) {
 		System.out.println("SampleService.modifySample()");
 		// 1.
 		Sample sample = new Sample();
@@ -172,7 +180,15 @@ public class SampleService {
 			MultipartFile multipartFile = sampleRequest.getMultipartFile();
 			sampleFile.setSampleNo(sample.getSampleNo());	// insertSample(sample) 후에 pk값이 sample 자리에 채워진다.
 			// 3. 
-			String path = "c:\\uploads";
+			String path =  request.getSession().getServletContext().getRealPath("/uploads");
+			System.out.println(path+"<--path");
+			File fileDirectory = new File(path);
+			if(!fileDirectory.exists()) {
+				fileDirectory.mkdirs();
+				System.out.println("directory create!!!");
+			}else {
+				System.out.println("Not directory create");
+			}
 			sampleFile.setSampleFilePath(path);
 			// 4.
 			String originalFileName = multipartFile.getOriginalFilename();	// 이름.확장자

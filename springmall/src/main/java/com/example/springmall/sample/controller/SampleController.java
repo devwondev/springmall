@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.springmall.sample.service.SampleService;
 import com.example.springmall.sample.vo.Sample;
@@ -86,10 +87,10 @@ public class SampleController {
 	 * @Method Name : addSample
 	 */
 	@RequestMapping(value="/sample/addSample", method=RequestMethod.POST)
-	public String addSample(SampleRequest sampleRequest) {
+	public String addSample(SampleRequest sampleRequest, MultipartHttpServletRequest request) {
 		System.out.println("SampleController.addSample() 입력액션");
 		System.out.println(sampleRequest.getMultipartFile()+"<--sampleRequest.getMultipartFile()");
-		sampleService.addSample(sampleRequest);
+		sampleService.addSample(sampleRequest, request);
 		return "redirect:/sample/sampleList";
 	}
 	/**
@@ -119,9 +120,9 @@ public class SampleController {
 	 * @Method Name : modifySample
 	 */
 	@RequestMapping(value="/sample/modifySample", method=RequestMethod.POST)
-	public String modifySample(SampleRequest sampleRequest, String formFileName) {
+	public String modifySample(SampleRequest sampleRequest, String formFileName, MultipartHttpServletRequest request) {
 		System.out.println("SampleController.modifySample() 수정액션");
-		sampleService.modifySample(sampleRequest, formFileName);
+		sampleService.modifySample(sampleRequest, formFileName, request);
 		return "redirect:/sample/sampleList";
 	}
 }
