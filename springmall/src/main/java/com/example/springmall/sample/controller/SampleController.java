@@ -3,16 +3,16 @@ package com.example.springmall.sample.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.springmall.sample.service.SampleService;
-import com.example.springmall.sample.vo.Sample;
 import com.example.springmall.sample.vo.SampleAndSampleFile;
 import com.example.springmall.sample.vo.SampleRequest;
 
@@ -87,7 +87,7 @@ public class SampleController {
 	 * @Method Name : addSample
 	 */
 	@RequestMapping(value="/sample/addSample", method=RequestMethod.POST)
-	public String addSample(SampleRequest sampleRequest, MultipartHttpServletRequest request) {
+	public String addSample(SampleRequest sampleRequest, HttpServletRequest request) {
 		System.out.println("SampleController.addSample() 입력액션");
 		System.out.println(sampleRequest.getMultipartFile()+"<--sampleRequest.getMultipartFile()");
 		sampleService.addSample(sampleRequest, request);
@@ -120,9 +120,26 @@ public class SampleController {
 	 * @Method Name : modifySample
 	 */
 	@RequestMapping(value="/sample/modifySample", method=RequestMethod.POST)
-	public String modifySample(SampleRequest sampleRequest, String formFileName, MultipartHttpServletRequest request) {
+	public String modifySample(SampleRequest sampleRequest, String formFileName, HttpServletRequest request) {
 		System.out.println("SampleController.modifySample() 수정액션");
 		sampleService.modifySample(sampleRequest, formFileName, request);
 		return "redirect:/sample/sampleList";
+	}
+	/**
+	 * <pre>
+	 * 1. 개요 : 다운로드화면
+	 * 2. 처리내용 : 리스트에서 다운로드버튼 누르면 sampleNo에 맞는 파일이 보여짐. 
+	 * 3. 입력 Data : Model model, int sampleNo
+	 * 4. 리턴 Data : String sample/downloadSample
+	 * </pre>
+	 * @Method Name : downloadSample
+	 */
+	@RequestMapping(value = "/sample/downloadSample", method = RequestMethod.GET)
+	public String downloadSample(Model model, @RequestParam(value = "sampleNo") int sampleNo) {
+		System.out.println("SampleController.downloadSample().get호출");
+		HashMap<String, Object> map = sampleService.getSample(sampleNo);
+		model.addAttribute("sampleFile", map.get("sampleFile"));
+		model.addAttribute("sample", map.get("sample"));
+		return "/sample/downloadSample";
 	}
 }

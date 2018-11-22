@@ -39,6 +39,11 @@
 </head>
 <body class="container">
 	<h1 align = "center">modifySample</h1>
+	<div class="form-group text-left">
+			<a href="/sample/sampleList">
+				<button type="button" class="btn btn-dark">목록으로</button>
+			</a>
+	</div>
 	<form id="modifyForm" action="/sample/modifySample" method="post" enctype="multipart/form-data">
 		<input class="form-control" type="hidden" name = "sampleNo" value="${sample.sampleNo}">
 		<table class = "table">

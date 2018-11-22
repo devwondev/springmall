@@ -24,6 +24,7 @@
 				<td>SAMPLE FILE</td>
 				<td>DELETE</td>
 				<td>UPDATE</td>
+				<td>DOWNLOAD</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -36,6 +37,7 @@
 					<td>${sample.sampleFileName}.${sample.sampleFileExt}</td>
 					<td><a href="/sample/removeSample?sampleNo=${sample.sampleNo}">DELETE</a></td>
 					<td><a href="/sample/modifySample?sampleNo=${sample.sampleNo}">UPDATE</a></td>
+					<td><a href="/sample/downloadSample?sampleNo=${sample.sampleNo}">DOWNLOAD</a></td>
 				</tr>
 			</c:forEach>
 			
@@ -72,8 +74,6 @@
 			<option value="">::선택::</option>
 			<option value="sampleNo">번호</option>
 			<option value="samPleId">아이디</option>
-			<option value="sampleFileName">파일명</option>
-			<option value="sampleFileExt">파일확장자</option>
 		</select>
 		<input type="text" name="searchWord" class="form-control-sm">
 		<input class="btn" type="submit" value="검색">

@@ -6,11 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.example.springmall.sample.mapper.SampleFileMapper;
 import com.example.springmall.sample.mapper.SampleMapper;
@@ -100,7 +101,7 @@ public class SampleService {
 		return sampleMapper.deleteSample(sampleNo);
 	}
 	// 3. 입력
-	public int addSample(SampleRequest sampleRequest, MultipartHttpServletRequest request) {
+	public int addSample(SampleRequest sampleRequest, HttpServletRequest request) {
 		System.out.println("SampleService.addSample()");
 		// 1
 		Sample sample = new Sample();
@@ -120,8 +121,6 @@ public class SampleService {
 		if(!fileDirectory.exists()) {
 			fileDirectory.mkdirs();
 			System.out.println("directory create!!!");
-		}else {
-			System.out.println("Not directory create");
 		}
 		sampleFile.setSampleFilePath(path);
 		// 4. 확장자
@@ -165,7 +164,7 @@ public class SampleService {
 		return map;
 	}
 	// 4-2. 수정 액션
-	public int modifySample(SampleRequest sampleRequest, String formFileName, MultipartHttpServletRequest request) {
+	public int modifySample(SampleRequest sampleRequest, String formFileName, HttpServletRequest request) {
 		System.out.println("SampleService.modifySample()");
 		// 1.
 		Sample sample = new Sample();
@@ -186,8 +185,6 @@ public class SampleService {
 			if(!fileDirectory.exists()) {
 				fileDirectory.mkdirs();
 				System.out.println("directory create!!!");
-			}else {
-				System.out.println("Not directory create");
 			}
 			sampleFile.setSampleFilePath(path);
 			// 4.
