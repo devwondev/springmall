@@ -125,21 +125,5 @@ public class SampleController {
 		sampleService.modifySample(sampleRequest, formFileName, request);
 		return "redirect:/sample/sampleList";
 	}
-	/**
-	 * <pre>
-	 * 1. 개요 : 다운로드화면
-	 * 2. 처리내용 : 리스트에서 다운로드버튼 누르면 sampleNo에 맞는 파일이 보여짐. 
-	 * 3. 입력 Data : Model model, int sampleNo
-	 * 4. 리턴 Data : String sample/downloadSample
-	 * </pre>
-	 * @Method Name : downloadSample
-	 */
-	@RequestMapping(value = "/sample/downloadSample", method = RequestMethod.GET)
-	public String downloadSample(Model model, @RequestParam(value = "sampleNo") int sampleNo) {
-		System.out.println("SampleController.downloadSample().get호출");
-		HashMap<String, Object> map = sampleService.getSample(sampleNo);
-		model.addAttribute("sampleFile", map.get("sampleFile"));
-		model.addAttribute("sample", map.get("sample"));
-		return "/sample/downloadSample";
-	}
+
 }

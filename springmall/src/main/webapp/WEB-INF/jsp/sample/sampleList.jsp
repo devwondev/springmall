@@ -21,10 +21,9 @@
 				<td>SAMPLE NO</td>
 				<td>SAMPLE ID</td>
 				<td>SAMPLE PW</td>
-				<td>SAMPLE FILE</td>
+				<td>SAMPLE FILE DOWNLOAD</td>
 				<td>DELETE</td>
 				<td>UPDATE</td>
-				<td>DOWNLOAD</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -34,10 +33,9 @@
 					<td>${sample.sampleNo}</td>
 					<td>${sample.sampleId}</td>
 					<td>${sample.samplePw}</td>
-					<td>${sample.sampleFileName}.${sample.sampleFileExt}</td>
+					<td><a href="/download/file/${sample.sampleFileName}.${sample.sampleFileExt}">${sample.sampleFileName}.${sample.sampleFileExt}</a></td>
 					<td><a href="/sample/removeSample?sampleNo=${sample.sampleNo}">DELETE</a></td>
 					<td><a href="/sample/modifySample?sampleNo=${sample.sampleNo}">UPDATE</a></td>
-					<td><a href="/sample/downloadSample?sampleNo=${sample.sampleNo}">DOWNLOAD</a></td>
 				</tr>
 			</c:forEach>
 			
@@ -69,14 +67,13 @@
 			</a>
 		</c:if>
 	</div>
-	<form action="/sample/sampleList" method="post" class="form-group text-center">
+	<!-- <form action="/sample/sampleList" method="post" class="form-group text-center">
 		<select name="searchKey" class="form-control-sm">
-			<option value="">::선택::</option>
-			<option value="sampleNo">번호</option>
-			<option value="samPleId">아이디</option>
+			<option value="sampleNo">sampleNo</option>
+			<option value="sampleId">sampleId</option>
 		</select>
 		<input type="text" name="searchWord" class="form-control-sm">
 		<input class="btn" type="submit" value="검색">
-	</form>
+	</form> -->
 </body>
 </html>
