@@ -21,7 +21,6 @@
 				<td>SAMPLE NO</td>
 				<td>SAMPLE ID</td>
 				<td>SAMPLE PW</td>
-				<td>SAMPLE FILE DOWNLOAD</td>
 				<td>DELETE</td>
 				<td>UPDATE</td>
 			</tr>
@@ -33,9 +32,8 @@
 					<td>${sample.sampleNo}</td>
 					<td>${sample.sampleId}</td>
 					<td>${sample.samplePw}</td>
-					<td><a href="/download/file/${sample.sampleFileName}.${sample.sampleFileExt}">${sample.sampleFileName}.${sample.sampleFileExt}</a></td>
 					<td><a href="/sample/removeSample?sampleNo=${sample.sampleNo}">DELETE</a></td>
-					<td><a href="/sample/modifySample?sampleNo=${sample.sampleNo}">UPDATE</a></td>
+					<td><a href="/sample/detailSample?sampleNo=${sample.sampleNo}">DETAIL</a></td>
 				</tr>
 			</c:forEach>
 			

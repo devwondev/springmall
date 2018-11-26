@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>modifySample.jsp</title>
+<title>detailSample.jsp</title>
 <!-- bootstrap CDN -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <!-- jquery CDN -->
@@ -38,38 +38,41 @@
 </script>
 </head>
 <body class="container">
-	<h1 align = "center">modifySample</h1>
+	<h1 align = "center">detailSample</h1>
 	<div class="form-group text-left">
 			<a href="/sample/sampleList">
 				<button type="button" class="btn btn-dark">목록으로</button>
 			</a>
 	</div>
-	<form id="modifyForm" action="/sample/modifySample" method="post" enctype="multipart/form-data">
+	<form id="modifyForm" action="/sample/detailSample" method="post" enctype="multipart/form-data">
 		<input class="form-control" type="hidden" name = "sampleNo" value="${sample.sampleNo}">
 		<table class = "table">
 			<tr>
 				<td>id</td>
 				<td colspan="2">
-					<input class="form-control" type = "text" name = "sampleId" id="sampleId" value="${sample.sampleId}">
+					<input class="form-control" type = "text" name = "sampleId" id="sampleId" value="${sample.sampleId}" readonly>
 					<span id="sampleIdHelper"></span>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">pw</td>
-				<td>
+				<td>pw</td>
+				<td colspan="2">
 					<input class="form-control" type = "password" name = "samplePw" id="samplePw" value="${sample.samplePw}">
 					<span id="samplePwHelper"></span>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">file</td>
-				<td>
+				<td>File Download</td>
+				<td colspan="2">
 					<input class="form-control" type="text" name="formFileName" value="${sampleFile.sampleFileName}.${sampleFile.sampleFileExt}">
-					<input class="form-control" type ="file" name ="multipartFile">
+					<a href="/download/file/${sampleFile.sampleFileName}.${sampleFile.sampleFileExt}">Download</a>
 				</td>
 			</tr>
 			<tr>
-				
+				<td>File Modify</td>
+				<td colspan="2">
+					<input class="form-control" type ="file" name ="multipartFile">
+				</td>
 			</tr>
 		</table>
 		<div class="form-group text-center">

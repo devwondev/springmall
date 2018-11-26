@@ -95,20 +95,20 @@ public class SampleController {
 	}
 	/**
 	 * <pre>
-	 * 1. 개요 : 수정 화면
-	 * 2. 처리내용 : 리스트에서 수정버튼 누르면 sampleNo에 맞는 정보가 수정화면에 보여진다.
+	 * 1. 개요 : 상세 화면
+	 * 2. 처리내용 : 리스트에서 상세버튼 누르면 sampleNo에 맞는 정보가 상세화면에 보여진다.
 	 * 3. 입력 Data : Model model, int sampleNo
-	 * 4. 리턴 Data : String sample/modifySample
+	 * 4. 리턴 Data : String sample/detailSample
 	 * </pre>
 	 * @Method Name : modifySample
 	 */
-	@RequestMapping(value="/sample/modifySample", method=RequestMethod.GET)
+	@RequestMapping(value="/sample/detailSample", method=RequestMethod.GET)
 	public String modifySample(Model model, @RequestParam(value="sampleNo") int sampleNo) {
-		System.out.println("SampleController.modifySample() 수정화면");
+		System.out.println("SampleController.detailSample() 상세화면");
 		HashMap<String, Object> map = sampleService.getSample(sampleNo);
 		model.addAttribute("sampleFile", map.get("sampleFile"));
 		model.addAttribute("sample", map.get("sample"));
-		return "sample/modifySample";
+		return "sample/detailSample";
 	}
 	/**
 	 * <pre>
@@ -119,9 +119,9 @@ public class SampleController {
 	 * </pre>
 	 * @Method Name : modifySample
 	 */
-	@RequestMapping(value="/sample/modifySample", method=RequestMethod.POST)
+	@RequestMapping(value="/sample/detailSample", method=RequestMethod.POST)
 	public String modifySample(SampleRequest sampleRequest, String formFileName, HttpServletRequest request) {
-		System.out.println("SampleController.modifySample() 수정액션");
+		System.out.println("SampleController.detailSample() 수정액션");
 		sampleService.modifySample(sampleRequest, formFileName, request);
 		return "redirect:/sample/sampleList";
 	}
